@@ -116,3 +116,94 @@ username:
 username: {"张三","李四","王五"}
 ```
 
+### 3、配置文件注入
+
+配置文件
+
+```yaml
+userinfo:
+  account: 11111
+  username: "张三"
+  age: 20
+  sex: true
+  accountAndPaswd:
+    11111: 123456
+  list:
+     - "李四"
+     - "王五"
+     - "赵六"
+    
+```
+
+JavaBean
+
+```Java
+@Component
+@ConfigurationProperties(prefix = "userinfo")
+public class UserInfo {
+    private Long account;//账号
+    private String username;//姓名
+    private Integer age;//年龄
+    private Boolean sex;//性别
+
+    private Map<Long,String> accountAndPaswd;
+    private List<Object> list;
+}
+```
+
+我们导入配置文件处理器之后可以配置提示
+
+```xml
+<!-- 导入配置文件处理器 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+     <optional>true</optional>
+</dependency>
+```
+
+###### 1、@Value 获取值与 @ConfigurationProperties获取值比较
+
+|                      | @ConfigurationProperties | @Value       |
+| -------------------- | ------------------------ | ------------ |
+| 功能                 | 批量注入配置文件中的属性 | 一个一个指定 |
+| 松散绑定（松散语法） | 支持                     | 不支持       |
+| SpEL                 | 不支持                   | 支持         |
+| JSR303数据校验       | 支持                     | 不支持       |
+| 复杂类型封装         | 支持                     | 不支持       |
+
+如果只在某个业务逻辑中只需要获取某个值，就可以使用@Value
+
+配置文件yml还是properties都可以获取到值：
+
+###### 2、配置文件数据校验
+
+```java
+@Component
+@ConfigurationProperties(prefix = "userinfo")
+public class UserInfo {
+    private Long account;//账号
+    private String username;//姓名
+    private Integer age;//年龄
+    private Boolean sex;//性别
+    @Email//邮箱校验
+    private String email;
+}
+```
+
+###### 3、加载指定的配置文件
+
+```java
+@PropertySource(Value = "classpath:userinfo.properties")
+@Component
+@ConfigurationProperties(prefix = "userinfo")
+public class UserInfo {
+    private Long account;//账号
+    private String username;//姓名
+    private Integer age;//年龄
+    private Boolean sex;//性别
+    @Email//邮箱校验
+    private String email;
+}
+```
+
