@@ -1,8 +1,10 @@
-package com.example.demo1;
+package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
+//@ImportResource(locations = {"classpath:userbean.xml"})
 @SpringBootApplication
 public class Demo1Application {
 

@@ -1,17 +1,13 @@
-package com.example.demo1;
+package com.example.dto;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-/*
-将配置文件中每一个属性的值映射到组件
-@ConfigurationProperties告诉Spring Boot将本类中所属性和配置文件中相关的配置进行绑定
-prefix = "UserInfo" ：配置文件下的属性进行识别
- */
+
 @Component
-@ConfigurationProperties(prefix = "userinfo")//默认从全局文件中获取值
+@ConfigurationProperties(prefix = "application-userinfo.yml")
 public class UserInfo {
     private Long account;//账号
     private String username;//姓名
@@ -20,6 +16,19 @@ public class UserInfo {
 
     private Map<Long,String> accountAndPaswd;
     private List<Object> list;
+
+    public UserInfo(){
+
+    }
+
+    public UserInfo(Long account, String username, Integer age, Boolean sex, Map<Long, String> accountAndPaswd, List<Object> list) {
+        this.account = account;
+        this.username = username;
+        this.age = age;
+        this.sex = sex;
+        this.accountAndPaswd = accountAndPaswd;
+        this.list = list;
+    }
 
     @Override
     public String toString() {

@@ -1,12 +1,2 @@
-
-#userinfo:
-#  account: 11111
-#  username: "张三"
-#  age: 20
-#  sex: true
-#  accountAndPaswd:
-#    11111: 123456
-#  list:
-#     - "李四"
-#     - "王五"
-#     - "赵六"
+#server:
+#  port: 8081
